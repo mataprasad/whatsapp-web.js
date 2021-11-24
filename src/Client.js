@@ -141,8 +141,11 @@ class Client extends EventEmitter {
                 // Wait for QR Code
                 const QR_CANVAS_SELECTOR = 'canvas';
                 await page.waitForSelector(QR_CANVAS_SELECTOR, { timeout: this.options.qrTimeoutMs });
-                const qrImgData = await page.$eval(QR_CANVAS_SELECTOR, canvas => [].slice.call(canvas.getContext('2d').getImageData(0, 0, 264, 264).data));
-                const qr = jsQR(qrImgData, 264, 264).data;
+//                 const qrImgData = await page.$eval(QR_CANVAS_SELECTOR, canvas => [].slice.call(canvas.getContext('2d').getImageData(0, 0, 264, 264).data));
+//                 const qr = jsQR(qrImgData, 264, 264).data;
+                
+                const qr = await page.$eval(QR_CANVAS_SELECTOR, canvas => canvas.toDataURL());
+               
                 
                 /**
                 * Emitted when the QR code is received
